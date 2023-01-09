@@ -19,9 +19,9 @@ export default async function request(url: string, params: any = {}) {
     link = base + partUrl;
   }
   let token = '';
-  let auth1 = 'ghp_xIX2uL4u4o6zim7';
-  let auth2 = 'CnYkothOhneWCWB3rSt3y';
-  token = `token ${auth1}${auth2}`;
+  if(localStorage.getItem('auth')){
+    token=`token ${localStorage.getItem('auth')}`;
+  }
   const headers = {
     Authorization: token,
   };

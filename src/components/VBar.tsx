@@ -77,7 +77,7 @@ export default defineComponent({
     const loadingRef: any = ref(null);
     const menu: any = ref([]);
     const ids: any = ref([]);
-    const auth: any = ref(Boolean(localStorage.getItem('auth') == 'true'));
+    const auth: any = ref(Boolean(localStorage.getItem('auth') !== null));
     const createIssue = () => {
       useDialog({
         com: createTpl,

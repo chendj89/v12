@@ -15,7 +15,7 @@ import { getIssue } from '@/tools/issues';
 const auth: any = ref(false);
 const loading = ref(false);
 
-auth.value = Boolean(localStorage.getItem('auth') == 'true');
+auth.value = Boolean(localStorage.getItem('auth') !== null);
 const vmList: any = ref([]);
 const g_data: any = inject('g_data');
 

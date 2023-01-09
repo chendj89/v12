@@ -19,8 +19,8 @@ export default async function request(url: string, params: any = {}) {
     link = base + partUrl;
   }
   let token = '';
-  let auth1 = 'ghp_WQIz0tllEx1BZ2wj';
-  let auth2 = 'MW0bIdfSNpxDuJ4XTkJp';
+  let auth1 = 'ghp_xIX2uL4u4o6zim7';
+  let auth2 = 'CnYkothOhneWCWB3rSt3y';
   token = `token ${auth1}${auth2}`;
   const headers = {
     Authorization: token,

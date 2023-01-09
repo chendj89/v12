@@ -25,7 +25,7 @@ export default async function request(url: string, params: any = {}) {
   const headers = {
     Authorization: token,
   };
-  params.headers = headers;
+  // params.headers = headers;
   params.cache = 'no-cache';
   params.method = method.trim().toUpperCase();
   return await fetch(link, params);

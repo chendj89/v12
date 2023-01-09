@@ -7,7 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Add: typeof import('./src/components/modal/add.vue')['default']
+    Add: typeof import('./src/components/tpl/add.vue')['default']
     Auth: typeof import('./src/components/modal/auth.vue')['default']
     C1: typeof import('./src/components/modal/c1.vue')['default']
     C2: typeof import('./src/components/modal/c2.vue')['default']
@@ -15,8 +15,8 @@ declare module '@vue/runtime-core' {
     C4: typeof import('./src/components/modal/c4.vue')['default']
     Close: typeof import('./src/components/tpl/close.vue')['default']
     copy: typeof import('./src/components/modal/c1 copy.vue')['default']
-    Create: typeof import('./src/components/modal/create.vue')['default']
-    Edit: typeof import('./src/components/modal/edit.vue')['default']
+    Create: typeof import('./src/components/tpl/create.vue')['default']
+    Edit: typeof import('./src/components/tpl/edit.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']

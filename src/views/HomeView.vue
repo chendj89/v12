@@ -1,76 +1,55 @@
-<script setup lang="ts">
-import VMenu2 from '@/components/VMenu2';
-import request from '@/tools/fetch';
-import formatBody from '@/tools/formatBody';
-import useDialog from '@/tools/useDialog';
-import c1 from '@/components/modal/c1.vue';
-import auth from '@/components/modal/auth.vue';
-const ins = getCurrentInstance();
-const issueList = ref([]);
-const loading = ref(false);
-const loaded = ref(false);
-const getIssue = async () => {
-  loading.value = true;
-  let issues: any = await request('GET /repos/{owner}/{repo}/issues?sort=created&direction=asc&labels=menu', {
-    owner: 'chendj89',
-    repo: 'data',
-    auth:true,
-  }).then((res) => res.json());
-  loading.value = false;
-  issueList.value = issues.map((item: any) => {
-    return {
-      id: item.id,
-      number: item.number,
-      comments_url: item.comments_url,
-      ...formatBody(item.body).code,
-    };
-  });
-};
-const createIssue = () => {
-  useDialog({
-    com: c1,
-    ins: ins,
-    data: {},
-    title: '新建菜单',
-  }).then((res: any) => {
-    if (res && res.reload) {
-      getIssue();
-    }
-  });
-};
-const reload = () => {
-  getIssue();
-};
-const login = () => {
-  useDialog({
-    ins: ins,
-    com: auth,
-    title: '登录',
-    data: {},
-  }).then((res: any) => {
-    if (res.reload) {
-      loaded.value = true;
-      getIssue();
-    }
-  });
-};
-onMounted(() => {
-  const pwd = localStorage.getItem('pwd');
-  if (pwd) {
-    loaded.value = true;
-  
-  }
-  getIssue();
-  // getIssue();
-});
-</script>
-
 <template>
   <div style="padding: 20px">
     <n-spin :show="loading">
-      <VMenu2 style="margin: 0 10px 10px" v-for="item in issueList" :key="item.id" :data="item" @reload="reload"></VMenu2>
+      <VMenu4 v-for="(item, index) in vmList" :key="index" :auth="auth" style="margin: 0 10px 10px" :base="item" @reload="init"></VMenu4>
     </n-spin>
-    <n-button style="margin: 0 10px 10px" @click="createIssue">创建</n-button>
-    <n-button v-if="!loaded" style="margin: 0 10px 10px" @click="login">登录</n-button>
+    <VBar></VBar>
   </div>
 </template>
+
+<script setup lang="ts">
+import VMenu4 from '@/components/VMenu4';
+import VBar from '@/components/VBar';
+import { formatComment } from '@/tools/format';
+import { getIssue } from '@/tools/issues';
+const auth: any = ref(false);
+const loading = ref(false);
+
+auth.value = Boolean(localStorage.getItem('auth') == 'true');
+const vmList: any = ref([]);
+const g_data: any = inject('g_data');
+
+/**
+ * 获取菜单
+ */
+const init = () => {
+  loading.value = true;
+  getIssue().then(async (data) => {
+    vmList.value = [];
+    loading.value = false;
+    g_data.value.top = 0;
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      let content = formatComment(item.body);
+      g_data.value.top += Number(content.top || 0);
+      vmList.value.push({
+        ...content,
+        number: item.number,
+        comments_url: item.comments_url,
+      });
+      await sleep(500);
+    }
+  });
+};
+init();
+async function sleep(time: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+}
+
+</script>
+
+<style scoped></style>

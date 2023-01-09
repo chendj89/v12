@@ -15,8 +15,11 @@ import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 // 自动导入引用
 import AutoImport from 'unplugin-auto-import/vite';
+
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base:process.env.NODE_ENV=="development"?'/':'/v12/',
   plugins: [
     vue(),
     vueJsx(),

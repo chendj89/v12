@@ -41,7 +41,7 @@ jobs:
 
       # 运行构建脚本
       - name: Build frontend
-        run: npm run build
+        run: npm run build-only
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2

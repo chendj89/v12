@@ -4,6 +4,7 @@ import useDialog from '@/tools/useDialog';
 import createTpl from '@/components/tpl/create.vue';
 // @ts-ignore
 import BiPlusSquareDotted from '~icons/bi/plus-square-dotted';
+// @ts-ignore
 import BiCalendar2DateFill from '~icons/bi/calendar2-date-fill'
 
 const barStyle: CSSProperties = {
@@ -70,7 +71,7 @@ const vars = {
 };
 export default defineComponent({
   name: 'VBar',
-  setup() {
+  setup(props,ctx) {
     const ins=getCurrentInstance();
     const g_data: any = inject('g_data');
     const elRef: any = ref(null);
@@ -84,7 +85,7 @@ export default defineComponent({
         ins: ins,
       }).then((res: any) => {
         if (res && res.reload) {
-          init();
+          ctx.emit('init');
         }
       });
     };

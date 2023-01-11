@@ -3,7 +3,7 @@
     <n-spin :show="loading">
       <VMenu4 v-for="(item, index) in vmList" :key="index" :auth="auth" style="margin: 0 10px 10px" :base="item" @reload="init"></VMenu4>
     </n-spin>
-    <VBar></VBar>
+    <VBar @init="init"></VBar>
   </div>
 </template>
 

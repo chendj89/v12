@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     copy: typeof import('./src/components/modal/c1 copy.vue')['default']
     Create: typeof import('./src/components/tpl/create.vue')['default']
     Edit: typeof import('./src/components/tpl/edit.vue')['default']
+    Login: typeof import('./src/components/tpl/login.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
@@ -24,8 +25,12 @@ declare module '@vue/runtime-core' {
     NInputNumber: typeof import('naive-ui')['NInputNumber']
     NSpin: typeof import('naive-ui')['NSpin']
     NSwitch: typeof import('naive-ui')['NSwitch']
+    NTabPane: typeof import('naive-ui')['NTabPane']
+    NTabs: typeof import('naive-ui')['NTabs']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sec: typeof import('./src/components/tpl/sec.vue')['default']
+    Token: typeof import('./src/components/tpl/token.vue')['default']
     Update: typeof import('./src/components/tpl/update.vue')['default']
   }
 }

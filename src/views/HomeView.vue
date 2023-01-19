@@ -24,6 +24,7 @@ const g_data: any = inject('g_data');
  */
 const init = () => {
   loading.value = true;
+  auth.value = Boolean(localStorage.getItem('auth') !== null);
   getIssue().then(async (data) => {
     vmList.value = [];
     loading.value = false;

@@ -12,15 +12,18 @@ export default async function request(url: string, params: any = {}) {
     link = partUrl;
   } else {
     for (let attr in params) {
-      if (partUrl.includes(`${attr}`)) {
+      if (partUrl.includes(`${attr}`) && attr !== 'auth') {
         partUrl = partUrl.replace(`{${attr}}`, params[attr]);
       }
     }
     link = base + partUrl;
   }
   let token = '';
-  if(localStorage.getItem('auth')){
-    token=`token ${localStorage.getItem('auth')}`;
+  if (localStorage.getItem('auth')) {
+    token = `token ${localStorage.getItem('auth')}`;
+  } else if (params.auth) {
+    token = `token ${params.auth}`;
+    localStorage.setItem('auth', params.auth);
   }
   const headers = {
     Authorization: token,

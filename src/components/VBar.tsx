@@ -1,11 +1,14 @@
-import { NAvatar, NSpace, NLoadingBarProvider, useLoadingBar, NSkeleton, NA,NIcon } from 'naive-ui';
+import { NAvatar, NSpace, NLoadingBarProvider, useLoadingBar, NSkeleton, NA, NIcon } from 'naive-ui';
 import type { CSSProperties } from 'vue';
 import useDialog from '@/tools/useDialog';
 import createTpl from '@/components/tpl/create.vue';
+import tokenTpl from '@/components/tpl/token.vue';
 // @ts-ignore
 import BiPlusSquareDotted from '~icons/bi/plus-square-dotted';
 // @ts-ignore
-import BiCalendar2DateFill from '~icons/bi/calendar2-date-fill'
+import BiCalendar2DateFill from '~icons/bi/calendar2-date-fill';
+// @ts-ignore
+import FluentEmojiAdd20Regular from '~icons/fluent/emoji-add-20-regular';
 
 const barStyle: CSSProperties = {
   position: 'fixed',
@@ -71,20 +74,34 @@ const vars = {
 };
 export default defineComponent({
   name: 'VBar',
-  setup(props,ctx) {
-    const ins=getCurrentInstance();
+  setup(props, ctx) {
+    const ins = getCurrentInstance();
     const g_data: any = inject('g_data');
     const elRef: any = ref(null);
     const loadingRef: any = ref(null);
     const menu: any = ref([]);
     const ids: any = ref([]);
     const auth: any = ref(Boolean(localStorage.getItem('auth') !== null));
+    /**
+     * 创建新的卡片
+     */
     const createIssue = () => {
       useDialog({
         com: createTpl,
         ins: ins,
       }).then((res: any) => {
         if (res && res.reload) {
+          ctx.emit('init');
+        }
+      });
+    };
+    const updateToken = () => {
+      useDialog({
+        com: tokenTpl,
+        ins: ins,
+      }).then((res: any) => {
+        if (res && res.reload) {
+          auth.value=true;
           ctx.emit('init');
         }
       });
@@ -96,7 +113,8 @@ export default defineComponent({
       menu,
       ids,
       auth,
-      createIssue
+      createIssue,
+      updateToken,
     };
   },
   render() {
@@ -110,10 +128,13 @@ export default defineComponent({
             <NSpace {...vars.space}>
               {this.auth ? (
                 <NA style={{ ...vars.na.style }} onClick={this.createIssue}>
-                  <NAvatar {...vars.avatar} src="https://api.iconify.design/bi:plus-square-dotted.svg">
-                  </NAvatar>
+                  <NAvatar {...vars.avatar} src="https://api.iconify.design/bi:plus-square-dotted.svg"></NAvatar>
                 </NA>
-              ) : null}
+              ) : (
+                <NA style={{ ...vars.na.style }} onClick={this.updateToken}>
+                  <NAvatar {...vars.avatar} src="https://api.iconify.design/material-symbols:add-reaction-rounded.svg?color=%2318a058"></NAvatar>
+                </NA>
+              )}
               {values.map((item: any) => (
                 <NA key={item.id} style={{ ...vars.na.style }} href={item.url ? item.url : 'javascript:void(0);'} target={item.url ? '_blank' : null}>
                   <NAvatar {...vars.avatar} src={item.icon}></NAvatar>

@@ -12,7 +12,7 @@ export default function live2dwidget() {
         scale: 1,
       },
       display: {
-        position: 'right',
+        position: 'left',
         width: 90,
         height: 130,
         hOffset: 0, // 左右

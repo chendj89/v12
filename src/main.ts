@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import './assets/main.css';
 import 'uno.css';
+import live2dwidget from '@/tools/live2dwidget';
 const app = createApp(App);
 app.use(router);
+live2dwidget();
 app.mount('#app');

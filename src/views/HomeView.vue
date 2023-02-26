@@ -12,6 +12,7 @@ import VMenu4 from '@/components/VMenu4';
 import VBar from '@/components/VBar';
 import { formatComment } from '@/tools/format';
 import { getIssue } from '@/tools/issues';
+import request from '@/tools/fetch';
 const auth: any = ref(false);
 const loading = ref(false);
 
@@ -51,6 +52,54 @@ async function sleep(time: number) {
   });
 }
 
+// /**
+//  * 获取菜单
+//  */
+//   const getIssue = () => {
+//   return request('GET /repos/{owner}/{repo}/issues?sort=created&direction=asc&labels=menu', {
+//     owner: 'chendj89',
+//     repo: 'data',
+//   }).then((res) => res.json());
+// };
+
+function translation() {
+  request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'chendj89',
+    repo: 'translation',
+    path: 'src/en/list.ts',
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // updateList(data.sha);
+      // fetch('https://raw.githubusercontent.com/chendj89/translation/main/package.json')
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     console.log(res);
+      //   });
+    });
+}
+translation();
+
+function updateList(sha: string) {
+  const content =  [
+    {
+      name: 'proto',
+      type: [''],
+      key: [],
+      feature: [],
+    },
+  ];
+  request('PUT /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'chendj89',
+    repo: 'translation',
+    path: 'src/en/list.ts',
+    body: JSON.stringify({
+      message: '添加单词proto',
+      content: btoa(`${JSON.stringify(content)}`),
+      sha: sha,
+    }),
+  });
+}
 </script>
 
 <style scoped></style>

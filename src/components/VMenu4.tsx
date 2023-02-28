@@ -2,6 +2,7 @@ import { NSkeleton, NSpace, NSpin, NCard, NThing, NAvatar, NH2, NEllipsis, NText
 import type { CSSProperties, PropType } from 'vue';
 import { getComment } from '@/tools/issues';
 import request from '@/tools/fetch';
+import { useRouter } from 'vue-router';
 
 // @ts-ignore
 import BiPlusSquareDotted from '~icons/bi/plus-square-dotted';
@@ -146,6 +147,7 @@ const arrow = (that: any) => {
     </div>
   );
 };
+
 const iconsList = (that: any) => {
   if (that.base.list && that.base.list.length) {
     const getStyle = (cell: any) => {
@@ -177,6 +179,14 @@ const iconsList = (that: any) => {
         style = {
           href: 'javascript:void(0);',
           style: { display: 'inline-block' },
+        };
+      } else if (cell.url.startsWith('/')) {
+        style = {
+          href: 'javascript:void(0)',
+          style: { display: 'inline-block' },
+          onClick: () => {
+            router.push(cell.url);
+          },
         };
       } else {
         style = {
@@ -256,11 +266,12 @@ const setMenu = (that: any) => {
     </NDropdown>
   );
 };
-
+let router:any=null;
 export default defineComponent({
   name: 'VMenu4',
   props: _props,
   setup(props, ctx) {
+    router=useRouter();
     let g_data: any = null;
     if (!props.type) {
       g_data = inject('g_data');
@@ -383,9 +394,9 @@ export default defineComponent({
         }).then((data: any) => {
           if (data && data.reload) {
             loading.value = true;
-            if(!data.type){
-              if(g_data.value){
-                g_data.value.delMenuItem(data.menu)
+            if (!data.type) {
+              if (g_data.value) {
+                g_data.value.delMenuItem(data.menu);
               }
             }
             getMenu();

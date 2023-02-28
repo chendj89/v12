@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'auth',
       component: () => import('../views/auth.vue'),
     },
+    {
+      path: '/sheet',
+      name: 'sheet',
+      component: () => import('../views/sheet.vue'),
+    },
   ],
 });
 

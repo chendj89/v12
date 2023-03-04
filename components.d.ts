@@ -8,19 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Add: typeof import('./src/components/tpl/add.vue')['default']
-    Auth: typeof import('./src/components/modal/auth.vue')['default']
-    C1: typeof import('./src/components/modal/c1.vue')['default']
-    C2: typeof import('./src/components/modal/c2.vue')['default']
-    C3: typeof import('./src/components/modal/c3.vue')['default']
-    C4: typeof import('./src/components/modal/c4.vue')['default']
-    Close: typeof import('./src/components/tpl/close.vue')['default']
-    copy: typeof import('./src/components/modal/c1 copy.vue')['default']
     Create: typeof import('./src/components/tpl/create.vue')['default']
     Edit: typeof import('./src/components/tpl/edit.vue')['default']
-    Login: typeof import('./src/components/tpl/login.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
-    NCode: typeof import('naive-ui')['NCode']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
@@ -35,7 +26,6 @@ declare module '@vue/runtime-core' {
     NTabs: typeof import('naive-ui')['NTabs']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sec: typeof import('./src/components/tpl/sec.vue')['default']
     Token: typeof import('./src/components/tpl/token.vue')['default']
     Update: typeof import('./src/components/tpl/update.vue')['default']
   }

@@ -39,7 +39,7 @@ const init = () => {
         number: item.number,
         comments_url: item.comments_url,
       });
-      await sleep(500);
+      await sleep(100);
     }
   });
 };

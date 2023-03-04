@@ -15,11 +15,11 @@ import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 // 自动导入引用
 import AutoImport from 'unplugin-auto-import/vite';
-
+import importToCdn from 'vite-plugin-cdn-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:process.env.NODE_ENV=="development"?'/':'/v12/',
+  base: process.env.NODE_ENV == 'development' ? '/' : '/v12/',
   plugins: [
     vue(),
     vueJsx(),
@@ -48,6 +48,20 @@ export default defineConfig({
         filepath: './.eslintrc-auto-import.json',
         globalsPropValue: true,
       },
+    }),
+    importToCdn({
+      modules: [
+        {
+          name: 'vue',
+          var: 'Vue',
+          path: 'https://unpkg.com/vue',
+        },
+        {
+          name: 'naive',
+          var: 'naive',
+          path: 'https://unpkg.com/naive-ui',
+        },
+      ],
     }),
   ],
   resolve: {

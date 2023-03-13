@@ -201,9 +201,14 @@ const iconsList = (that: any) => {
       if (['edit'].includes(that.$props.type as string) && cell.isAdd) {
         return null;
       } else {
-        return h(NA, getStyle(cell), {
-          default: () => <NAvatar size={28} src={cell.icon} style={{ '--n-color': cell.padding ? null : '#e5e5e5', padding: cell.padding ? null : '4px' }}></NAvatar>,
-        });
+        if (/^<svg/.test(cell.icon)) {
+          return h(NA, getStyle(cell), {
+            default: () => h(NIcon, { innerHTML: cell.icon, size: 28, style: { '--n-color': cell.padding ? null : '#e5e5e5', padding: cell.padding ? null : '4px' } }),
+          });
+        } else
+          return h(NA, getStyle(cell), {
+            default: () => <NAvatar size={28} src={cell.icon} style={{ '--n-color': cell.padding ? null : '#e5e5e5', padding: cell.padding ? null : '4px' }}></NAvatar>,
+          });
       }
     };
     const arrowIcon = arrow(that);
@@ -266,12 +271,12 @@ const setMenu = (that: any) => {
     </NDropdown>
   );
 };
-let router:any=null;
+let router: any = null;
 export default defineComponent({
   name: 'VMenu4',
   props: _props,
   setup(props, ctx) {
-    router=useRouter();
+    router = useRouter();
     let g_data: any = null;
     if (!props.type) {
       g_data = inject('g_data');
@@ -519,7 +524,16 @@ export default defineComponent({
           <NCard style={ncardStyle}>
             <NThing style={{ lineHeight: 0 }} contentStyle={descriptionStyle}>
               {{
-                avatar: () => (this.base.icon ? <NAvatar {...vars.avatar} src={this.base.icon} size={48} /> : <NSkeleton {...vars.avatar} />),
+                avatar: () =>
+                  this.base.icon ? (
+                    /^<svg/.test(this.base.icon) ? (
+                      h(NIcon, { innerHTML: this.base.icon,size:48, ...vars.avatar})
+                    ) : (
+                      <NAvatar {...vars.avatar} src={this.base.icon} size={48} />
+                    )
+                  ) : (
+                    <NSkeleton {...vars.avatar} />
+                  ),
                 header: () => (this.base.name ? <NH2 {...vars.header}>{this.base.name}</NH2> : <NSkeleton {...vars.header} />),
                 description: () =>
                   this.base.desc ? (

@@ -101,7 +101,7 @@ export default defineComponent({
         ins: ins,
       }).then((res: any) => {
         if (res && res.reload) {
-          auth.value=true;
+          auth.value = true;
           ctx.emit('init');
         }
       });
@@ -137,7 +137,7 @@ export default defineComponent({
               )}
               {values.map((item: any) => (
                 <NA key={item.id} style={{ ...vars.na.style }} href={item.url ? item.url : 'javascript:void(0);'} target={item.url ? '_blank' : null}>
-                  <NAvatar {...vars.avatar} src={item.icon}></NAvatar>
+                  {/^<svg/.test(item.icon) ? h(NIcon, { innerHTML: item.icon, ...vars.avatar }) : <NAvatar {...vars.avatar} src={item.icon}></NAvatar>}
                 </NA>
               ))}
             </NSpace>
